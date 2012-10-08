@@ -1,3 +1,14 @@
+This fork of I/O Docs includes minor code clean-up and the following enhancements:
+
+- Support for API endpoints using HTTP Methods POST, PUT, and DELETE (https://github.com/ezarko/iodocs)
+- Added `auth` value of `header` to set HTTP Headers for API Authentication
+- Added `auth` value of `cookie` to set Cookie for API Authentication
+- Added `type` value of `json` for JSON value method parameters (https://github.com/adamkaplan/iodocs)
+- Support for nested endpoint parameters
+- Support for raw JSON POST/PUT payload
+- Support for inclusion of API Key in query string or POST/PUT payload
+
+
 I/O Docs - Open Source in Node.js
 =================================
 Copyright 2011 Mashery, Inc.
