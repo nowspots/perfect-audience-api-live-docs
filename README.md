@@ -15,6 +15,7 @@ This fork of [I/O Docs](https://github.com/mashery/iodocs) includes minor code c
 - Combinations of `auth`, e.g. `key` with `oauth`, `key` with `cookie`, etc.
 - Using paramaters of `"type": "json"`. Particularly when mixed with `"dataFormat": "json"`
 
+---------------
 
 I/O Docs - Open Source in Node.js
 =================================
