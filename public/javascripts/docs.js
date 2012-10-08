@@ -171,11 +171,9 @@
         event.preventDefault();
 
         var params = $(this).serializeArray(),
-            apiKey = { name: 'apiKey', value: $('input[name=key]').val() },
-            apiSecret = { name: 'apiSecret', value: $('input[name=secret]').val() },
-            apiName = { name: 'apiName', value: $('input[name=apiName]').val() };
+            credentials = $('form#credentials').serializeArray();
 
-        params.push(apiKey, apiSecret, apiName);
+        params = params.concat(credentials);
 
         // Setup results container
         var resultContainer = $('.result', self);

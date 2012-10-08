@@ -729,7 +729,7 @@ li {
   overflow: hidden;
 }
 
-.clearfix:after {
+div.cookie, div.headers, .clearfix:after {
   clear: both;
 }
 

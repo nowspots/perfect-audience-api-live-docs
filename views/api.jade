@@ -1,3 +1,63 @@
+mixin displayParameters(parameters, path)
+    - var level = 1
+    - var baseName = 'params['
+    - var currentPath = path
+ 
+    - if (path)
+        - currentPath += '.'
+        - each name in path.split('.')
+            - ++level
+            - baseName += name + '][' 
+
+    - each parameter in parameters
+        - var paramName = baseName + parameter.Name + ']'
+
+        - if (parameter.Required == 'Y')
+            - var required = true
+            - var className = 'required'
+        - else
+            - var required = false
+            - var className = ''
+        tr(class=className)
+            td.name(style='padding-left: ' + (level * 5) + 'px;') #{parameter.Name}
+            td.parameter
+                - if (parameter.Type != 'parent')
+                    - if (parameter.Type == 'enumerated')
+                        select(name=paramName, placeholder=className)
+                          - if (parameter.Default =='')
+                              option(value='') 
+                          - each choice in parameter.EnumeratedList
+                              - if (parameter.Default == choice)
+                                      option(value=choice, selected=true) #{choice}
+                              - else
+                                      option(value=choice) #{choice}
+                    - else if (parameter.Type == 'boolean')
+                         select(name=paramName, placeholder=className)
+                              - if (parameter.Default == '')
+                                      option(value='') 
+                              - each choice in [apiInfo.booleanTrueVal, apiInfo.booleanFalseVal]
+                                 - if (parameter.Default == choice)
+                                         option(value=choice, selected=true) #{choice}
+                                 - else
+                                         option(value=choice) #{choice}
+                    - else if (parameter.Type == 'json')
+                        input(name='jsonParams[' + parameter.Name + ']', type='hidden', value=1)          
+                        input(name=paramName, value=parameter.Default, placeholder=className)
+                    - else
+                        input(name=paramName, value=parameter.Default, placeholder=className)
+            td.type=(parameter.Type != 'parent' ? parameter.Type : '')
+            td.description
+                p=parameter.Description || 'No description'
+                - if (parameter.Type =='enumerated' && parameter.EnumeratedDescription)
+                    dl.clearfix
+                        - each description, choice in parameter.EnumeratedDescription
+                            dt #{choice}
+                            dd #{description}
+
+        - if (parameter.Type == 'parent')
+            mixin displayParameters(parameter.Children, currentPath + parameter.Name)
+
+
 h1=apiInfo.name 
 - if (session.authed && apiInfo.oauth && apiInfo.oauth.type =='three-legged')
     - var authed ='authed'
@@ -15,29 +75,40 @@ form#credentials
          - else
              h2 API Credentials
                img(src='/images/key.png')
-
-             - if (apiInfo.oauth)
-                 input(type='hidden', name='oauth', value='authrequired')
-
-             - if (apiInfo.auth.defaultKey)
-                 - var defaultKey =apiInfo.auth.defaultKey
-             - else
-                 - var defaultKey =''
-
-             - if (apiInfo.auth.defaultSecret)
-                 - var defaultSecret =apiInfo.auth.defaultSecret
-             - else
-                 - var defaultSecret =''
-             div
-                 label(for='key') API Key
-                 input(id='key', name='key', value=defaultKey, style='color=#EEEEEE')
-             div
-                 - if (apiInfo.oauth || apiInfo.signature)
-                     label(for='secret') Shared Secret
-                     input(id='secret', name='secret', value=defaultSecret, style='color=#EEEEEE')
-             - if (apiInfo.oauth && apiInfo.oauth.type !='two-legged')
-                 div
-                    input(name='oauth', value='Authenticate with OAuth', type='submit', id='oauth-auth')
+             
+             - each auth, key in apiInfo.auth
+                 - if (key == 'cookie')
+                     div.cookie
+                         label(for='cookieValue') Cookie
+                         input(id='cookieValue', name='cookieValue', value=auth.default, style='color=#EEEEEE')
+                 - else if (key == 'header')
+                    - if (auth.length)
+                        div.headers
+                            h3 Headers
+                            - each header in auth
+                                div
+                                    label(for='headers[' + header.name + ']') #{header.name}
+                                    input(id='headers[' + header.name + ']', name='headers[' + header.name + ']', value=header.default, style='color=#EEEEEE')
+                 - else if (key == 'oauth')
+                     input(type='hidden', name='oauth', value='authrequired')
+        
+                     div
+                         label(for='oauthKey') Key
+                         input(id='oauthKey', name='oauthKey', value=auth.key, style='color=#EEEEEE')
+                         div
+                             label(for='oauthSecret') Secret
+                             input(id='oauthSecret', name='oauthSecret', value=auth.secret, style='color=#EEEEEE')
+                     - if (auth.type != 'two-legged')
+                         div
+                            input(name='oauth', value='Authenticate with OAuth', type='submit', id='oauth-auth')
+                 - else if (key == 'key')
+                         label(for='apiKey') API Key
+                         input(id='apiKey', name='apiKey', value=auth.default, style='color=#EEEEEE')
+                            
+                 - if (apiInfo.signature)
+                     div
+                         label(for='signature') Signature
+                         input(id='signature', name='signature', value=apiInfo.signature.default, style='color=#EEEEEE')
 
 div(id='controls')
     ul
@@ -73,6 +144,7 @@ ul
                             input(type='hidden', name='httpMethod', value=method.HTTPMethod)
                             input(type='hidden', name='oauth', value=secure)
                             input(type='hidden', name='methodUri', value=method.URI)
+                            input(type='hidden', name='dataFormat', value=method.dataFormat)
 
                             span.description #{method.Synopsis}
                             br
@@ -86,48 +158,10 @@ ul
                                             th Type
                                             th Description
                                     tbody
-                                        - var paramCount =0
-                                        - each parameter in method.parameters
-                                            - paramCount++
-                                            div(id='param' + paramCount)
-                                              - if (parameter.Required =='Y')
-                                                  - var required =true
-                                                  - var className ='required'
-                                              - else
-                                                  - var required =false
-                                                  - var className =''
-                                              tr(class=className)
-                                                  td.name=parameter.Name
-                                                  td.parameter
-                                                      - if (parameter.Type =='enumerated')
-                                                          select(name='params[' + parameter.Name + ']', placeholder=className)
-                                                            - if (parameter.Default =='')
-                                                                option(value='') 
-                                                            - each choice in parameter.EnumeratedList
-                                                                - if (parameter.Default ==choice)
-                                                                        option(value=choice, selected=true) #{choice}
-                                                                - else
-                                                                        option(value=choice) #{choice}
-                                                      - else if (parameter.Type =='boolean')
-                                                           select(name='params[' + parameter.Name + ']', placeholder=className)
-                                                                - if (parameter.Default =='')
-                                                                        option(value='') 
-                                                                - each choice in [apiInfo.booleanTrueVal,apiInfo.booleanFalseVal]
-                                                                   - if (parameter.Default ==choice)
-                                                                           option(value=choice, selected=true) #{choice}
-                                                                   - else
-                                                                           option(value=choice) #{choice}
-                                                      - else
-                                                          input(name='params[' + parameter.Name + ']', value=parameter.Default, placeholder=className)
-                                                  td.type=parameter.Type
-                                                  td.description
-                                                      p=parameter.Description || 'No description'
-                                                      - if (parameter.Type =='enumerated' && parameter.EnumeratedDescription)
-                                                          dl.clearfix
-                                                              - each description, choice in parameter.EnumeratedDescription
-                                                                  dt #{choice}
-                                                                  dd #{description}
+                                        mixin displayParameters(method.parameters, '')
+
                             - if (method.headers && method.headers.length > 0)
+                                // Create header fields and button to add/remove headers.
                                 div.headers
                                     h4.title
                                         div.indicator
@@ -151,6 +185,6 @@ ul
                                                     td
                                                         a(href='#', class='remove') Remove
                                         a(href='#', class='add-headers') Add Header
-                                    // Create header fields and button to add/remove headers.
+
                             - if (!method['read-only'])
                                 input(type='submit', id=method.MethodName, value='Try it!')
