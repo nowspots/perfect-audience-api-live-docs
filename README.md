@@ -8,6 +8,13 @@ This fork of I/O Docs includes minor code clean-up and the following enhancement
 - Support for raw JSON POST/PUT payload
 - Support for inclusion of API Key in query string or POST/PUT payload
 
+Several areas still require testing. Notably:
+
+- Full testing for OAuth
+- Using `signature`
+- Combinations of `auth`, e.g. `key` with `oauth`
+- Using paramaters of `"type": "json"`. Particularly when mixed with `"dataFormat": "json"
+
 
 I/O Docs - Open Source in Node.js
 =================================
