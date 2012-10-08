@@ -1,4 +1,4 @@
-This fork of I/O Docs includes minor code clean-up and the following enhancements:
+This fork of [I/O Docs](https://github.com/mashery/iodocs) includes minor code clean-up and the following enhancements:
 
 - Support for API endpoints using HTTP Methods POST, PUT, and DELETE (https://github.com/ezarko/iodocs)
 - Added `auth` value of `header` to set HTTP Headers for API Authentication
@@ -8,7 +8,7 @@ This fork of I/O Docs includes minor code clean-up and the following enhancement
 - Support for raw JSON POST/PUT payload
 - Support for inclusion of API Key in query string or POST/PUT payload
 
-Several areas still require testing. Notably:
+**Note:**: Several areas still require testing. Notably:
 
 - Full testing for OAuth
 - Using `signature`
