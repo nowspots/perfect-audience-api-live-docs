@@ -1,19 +1,20 @@
 This fork of [I/O Docs](https://github.com/mashery/iodocs) includes minor code clean-up and the following enhancements:
 
-- Support for API endpoints using HTTP Methods POST, PUT, and DELETE (https://github.com/ezarko/iodocs)
-- Added `auth` value of `header` to set HTTP Headers for API Authentication
-- Added `auth` value of `cookie` to set Cookie for API Authentication
-- Added `type` value of `json` for JSON value method parameters (https://github.com/adamkaplan/iodocs)
+- Support for API endpoints using HTTP Methods POST, PUT, and DELETE (per [ezarko](https://github.com/ezarko/iodocs))
+- Added `auth` option of `header`. Use to set HTTP Headers for API Authentication
+- Added `auth` option of `cookie`. Use to set Cookie for API Authentication
+- Added `type` options of `json`, `hidden`, `readonly` for method parameters (per [adamkaplan](https://github.com/adamkaplan/iodocs))
 - Support for nested endpoint parameters
 - Support for raw JSON POST/PUT payload
 - Support for inclusion of API Key in query string or POST/PUT payload
+- Added `type` value of `list` for method parameters. Use for comma separated values to be sent as an array (i.e. `param[]`)
 
-**Note**: Several areas still require testing. Notably:
+**Note**: Several areas require more testing. Notably:
 
+- New parameter types: `json`, `readonly`, `list`
 - Full testing for OAuth
 - Using `signature`
 - Combinations of `auth`, e.g. `key` with `oauth`, `key` with `cookie`, etc.
-- Using paramaters of `"type": "json"`. Particularly when mixed with `"dataFormat": "json"`
 
 ---------------
 
