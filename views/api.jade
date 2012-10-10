@@ -22,6 +22,7 @@ mixin displayParameters(parameters, path)
             td.name(style='padding-left: ' + (level * 5) + 'px;') #{parameter.Name}
             td.parameter
                 - if (parameter.Type != 'parent')
+                    input(name=paramName.replace('params[', 'paramTypes['), type='hidden', value=parameter.Type)
                     - if (parameter.Type == 'enumerated')
                         select(name=paramName, placeholder=className)
                           - if (parameter.Default =='')
@@ -40,12 +41,6 @@ mixin displayParameters(parameters, path)
                                          option(value=choice, selected=true) #{choice}
                                  - else
                                          option(value=choice) #{choice}
-                    - else if (parameter.Type == 'json')
-                        input(name='jsonParams[' + parameter.Name + ']', type='hidden', value=1)          
-                        input(name=paramName, value=parameter.Default, placeholder=className)
-                    - else if (parameter.Type == 'list')
-                        input(name='list[' + parameter.Name + ']', type='hidden', value=1)          
-                        input(name=paramName, value=parameter.Default, placeholder=className)
                     - else if (parameter.Type == 'readonly')
                         input(name=paramName, value=parameter.Default, placeholder=className, readonly='readonly')
                     - else

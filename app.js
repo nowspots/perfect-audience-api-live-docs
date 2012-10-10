@@ -271,7 +271,7 @@ function processRequest(req, res, next) {
     };
 
     var params = req.body.params || {},
-        jsonParams = req.body.jsonParams || {},
+        paramTypes = req.body.paramTypes || {},
         methodURL = req.body.methodUri,
         httpMethod = req.body.httpMethod,
         dataFormat = req.body.dataFormat,
@@ -294,6 +294,7 @@ function processRequest(req, res, next) {
 
     // Update params
     // Replace placeholders in the methodURL with matching params
+    // TODO: needs to be recursive for new nested parameters
     for (var param in params) {
         if (params.hasOwnProperty(param)) {
             if (params[param] !== '') {
@@ -305,22 +306,19 @@ function processRequest(req, res, next) {
                     methodURL = methodURL.replace(regx, params[param]);
                     delete params[param]
                 }
-            } else {
+                else if (paramTypes[param] == 'json') {
+                	params[param] = JSON.parse(params[param])
+                }
+                else if (paramTypes[param] == 'list') {
+                	params[param] = params[param].split(',');
+                }
+            }
+            else {
                 delete params[param]; // Delete blank params
             }
         }
     }
 
-    // Extract any parameters that are marked as JSON since they will otherwise be quoted
-    // TODO: fix with new nested JSON
-    for (var jsonparam in jsonParams) {
-        if (jsonParams.hasOwnProperty(jsonparam) && params.hasOwnProperty(jsonparam)) {
-            if (jsonParams[jsonparam]) {
-                params[jsonparam] = JSON.parse(params[jsonparam])
-            }
-        }
-    }
-        
     // TODO: use case for privateReqURL vs. options.path
     if (httpMethod == 'GET' && params.length) {
     	privateReqURL += '?' + query.stringify(params);
