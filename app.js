@@ -281,16 +281,8 @@ function processRequest(req, res, next) {
         key = req.sessionID + ':' + apiName,
         baseHostInfo = apiConfig.baseURL.split(':'),
         baseHostUrl = baseHostInfo[0],
-        baseHostPort = (baseHostInfo.length > 1) ? baseHostInfo[1] : "",
-        privateReqURL = apiConfig.protocol + '://' + apiConfig.baseURL + apiConfig.privatePath + methodURL,
-        options = {
-            headers: {},
-            protocol: apiConfig.protocol + ':',
-            host: baseHostUrl,
-            port: baseHostPort,
-            method: httpMethod,
-            path: apiConfig.publicPath + methodURL
-        };
+        baseHostPort = (baseHostInfo.length > 1) ? baseHostInfo[1] : "";
+        
 
     // Update params
     // Replace placeholders in the methodURL with matching params
@@ -318,6 +310,16 @@ function processRequest(req, res, next) {
             }
         }
     }
+
+    var privateReqURL = apiConfig.protocol + '://' + apiConfig.baseURL + apiConfig.privatePath + methodURL,
+    options = {
+    		headers: {},
+    		protocol: apiConfig.protocol + ':',
+    		host: baseHostUrl,
+    		port: baseHostPort,
+    		method: httpMethod,
+    		path: apiConfig.publicPath + methodURL
+    };
 
     // TODO: use case for privateReqURL vs. options.path
     if (httpMethod == 'GET' && params.length) {
@@ -732,8 +734,8 @@ app.get('/:api([^\.]+)', function(req, res) {
     res.render('api');
 });
 
-// Only listen on $ node app.js
 
+// Only listen on $ node app.js
 if (!module.parent) {
     var port = process.env.PORT || config.port;
     app.listen(port);
