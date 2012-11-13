@@ -728,6 +728,24 @@ app.post('/upload', function(req, res) {
   res.redirect('back');
 });
 
+app.all(/^\/service(?:\/(\d+))?$/, function(req, res) {
+	var response = {
+		'request': {
+			'url': req.url,
+			'method': req.method.toUpperCase(),
+			'timestamp': Math.round(+new Date() / 1000),
+		},
+		'parameters': null
+	}
+
+	response.parameters = response.method == 'GET' ? url.parse(req.url, true).query : req.body;
+	if (req.params[0]) {
+		response.parameters['id'] = req.params[0];
+	}
+	
+	res.send(JSON.stringify(response));
+});
+
 // API shortname, all lowercase
 app.get('/:api([^\.]+)', function(req, res) {
     req.params.api=req.params.api.replace(/\/$/,'');
