@@ -2,9 +2,8 @@
     "phparch": {
         "name": "PHP|Arch Service",
         "protocol": "http",
-        "baseURL": "localhost:3000",
+        "baseURL": "phparch-iodocs.herokuapp.com",
         "publicPath": "",
-        "port": 3000,
         "auth": {},
         "booleanTrueVal": 1,
         "booleanFalseVal": 0
