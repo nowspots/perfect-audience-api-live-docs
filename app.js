@@ -738,7 +738,7 @@ app.all(/^\/service(?:\/(\d+))?$/, function(req, res) {
 		'parameters': null
 	}
 
-	response.parameters = response.method == 'GET' ? url.parse(req.url, true).query : req.body;
+	response.parameters = response.request.method == 'GET' ? url.parse(req.url, true).query : req.body;
 	if (req.params[0]) {
 		response.parameters['id'] = req.params[0];
 	}
