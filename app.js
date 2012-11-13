@@ -322,10 +322,11 @@ function processRequest(req, res, next) {
     };
 
     // TODO: use case for privateReqURL vs. options.path
-    if (httpMethod == 'GET' && params.length) {
+    if (httpMethod == 'GET' && Object.keys(params).length) {
     	privateReqURL += '?' + query.stringify(params);
     	options.path += '?' + query.stringify(params);
     }
+    
     
     // Add API Key to params, if any.
     if (apiKey) {
@@ -738,11 +739,11 @@ app.all(/^\/service(?:\/(\d+))?$/, function(req, res) {
 		'parameters': null
 	}
 
-	response.parameters = response.request.method == 'GET' ? url.parse(response.request.url, true).query : req.body;
+	response.parameters = response.request.method == 'GET' ? url.parse(req.url, true).query : req.body;
 	if (req.params[0]) {
 		response.parameters['id'] = req.params[0];
 	}
-	
+
 	res.send(JSON.stringify(response));
 });
 
