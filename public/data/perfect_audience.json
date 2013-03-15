@@ -26,39 +26,6 @@
 			]
 		},
 		{
-			"name": "Campaigns",
-			"methods": [
-				{
-					"MethodName": "All Campaign Details",
-					"Synopsis": "Lists all campaigns the user has access to.",
-					"HTTPMethod": "GET",
-					"URI": "/campaigns",
-					"parameters": [
-						{
-							"Name": "site_id",
-							"Required": "N",
-							"Type": "string",
-							"Description": "Limits the results to the campaigns underneath the given site."
-						}
-					]
-				},
-				{
-					"MethodName": "Specific Campaign Details",
-					"Synopsis": "Returns campaign details for one campaign",
-					"HTTPMethod": "GET",
-					"URI": "/campaigns/:id",
-					"parameters": [
-						{
-							"Name": "id",
-							"Required": "Y",
-							"Type": "string",
-							"Description": "UUID of desired campaign."
-						}
-					]
-				}
-			]
-		},
-		{
 			"name": "Reports",
 			"methods": [
 				{
@@ -104,6 +71,164 @@
 							"Required": "N",
 							"Type": "string",
 							"Description": "Explicit end date for a time interval. Format: YYYY-mm-dd. Date is in Eastern Time. Must include a start_date if using end_date."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Sites",
+			"methods": [
+				{
+					"MethodName": "All Site Details",
+					"Synopsis": "Lists all sites the user has access to.",
+					"HTTPMethod": "GET",
+					"URI": "/sites",
+					"parameters": []
+				},
+				{
+					"MethodName": "Specific Site Details",
+					"Synopsis": "Returns site details for one site",
+					"HTTPMethod": "GET",
+					"URI": "/sites/:id",
+					"parameters": [
+						{
+							"Name": "id",
+							"Required": "Y",
+							"Type": "string",
+							"Description": "UUID of desired site."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Campaigns",
+			"methods": [
+				{
+					"MethodName": "All Campaign Details",
+					"Synopsis": "Lists all campaigns the user has access to.",
+					"HTTPMethod": "GET",
+					"URI": "/campaigns",
+					"parameters": [
+						{
+							"Name": "site_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to the campaigns underneath the given site."
+						}
+					]
+				},
+				{
+					"MethodName": "Specific Campaign Details",
+					"Synopsis": "Returns campaign details for one campaign",
+					"HTTPMethod": "GET",
+					"URI": "/campaigns/:id",
+					"parameters": [
+						{
+							"Name": "id",
+							"Required": "Y",
+							"Type": "string",
+							"Description": "UUID of desired campaign."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Ads",
+			"methods": [
+				{
+					"MethodName": "All Ad Details",
+					"Synopsis": "Lists all ads the user has access to.",
+					"HTTPMethod": "GET",
+					"URI": "/ads",
+					"parameters": [
+						{
+							"Name": "site_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to the ads underneath the given site."
+						}
+					]
+				},
+				{
+					"MethodName": "Specific Ad Details",
+					"Synopsis": "Returns ad details for one ad",
+					"HTTPMethod": "GET",
+					"URI": "/ads/:id",
+					"parameters": [
+						{
+							"Name": "id",
+							"Required": "Y",
+							"Type": "string",
+							"Description": "UUID of desired ad."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Segments",
+			"methods": [
+				{
+					"MethodName": "All Segment Details",
+					"Synopsis": "Lists all segments the user has access to.",
+					"HTTPMethod": "GET",
+					"URI": "/segments",
+					"parameters": [
+						{
+							"Name": "site_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to the segments underneath the given site."
+						}
+					]
+				},
+				{
+					"MethodName": "Specific Segment Details",
+					"Synopsis": "Returns segment details for one segment",
+					"HTTPMethod": "GET",
+					"URI": "/segments/:id",
+					"parameters": [
+						{
+							"Name": "id",
+							"Required": "Y",
+							"Type": "string",
+							"Description": "UUID of desired segment."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Conversions",
+			"methods": [
+				{
+					"MethodName": "All Conversion Details",
+					"Synopsis": "Lists all conversions the user has access to.",
+					"HTTPMethod": "GET",
+					"URI": "/conversions",
+					"parameters": [
+						{
+							"Name": "site_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to the conversions underneath the given site."
+						}
+					]
+				},
+				{
+					"MethodName": "Specific Conversion Details",
+					"Synopsis": "Returns conversion details for one conversion",
+					"HTTPMethod": "GET",
+					"URI": "/conversions/:id",
+					"parameters": [
+						{
+							"Name": "id",
+							"Required": "Y",
+							"Type": "string",
+							"Description": "UUID of desired conversion."
 						}
 					]
 				}
