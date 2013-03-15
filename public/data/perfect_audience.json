@@ -46,7 +46,7 @@
 					"MethodName": "Specific Campaign Details",
 					"Synopsis": "Returns campaign details for one campaign",
 					"HTTPMethod": "GET",
-					"URI": "/campaign/:id",
+					"URI": "/campaigns/:id",
 					"parameters": [
 						{
 							"Name": "id",
