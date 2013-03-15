@@ -46,10 +46,10 @@ try {
 }
 
 // CORE UPDATE: update config object to use Heroku RedisToGo
-if (process.env.REDISTOGO_URL) {
+if (process.env.REDIS_URL) {
 	// use production (Heroku) redis configuration
 	// overwrite `config` to keep it simple
-	var rtg = require('url').parse(process.env.REDISTOGO_URL);
+	var rtg = require('url').parse(process.env.REDIS_URL);
 	config.redis.port = rtg.port;
 	config.redis.host = rtg.hostname;
 	config.redis.password = rtg.auth.split(":")[1];
