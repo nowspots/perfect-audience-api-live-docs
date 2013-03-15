@@ -35,7 +35,7 @@
 					"URI": "/campaigns",
 					"parameters": [
 						{
-							"Name": "siteId",
+							"Name": "site_id",
 							"Required": "N",
 							"Type": "string",
 							"Description": "Limits the results to the campaigns underneath the given site."
@@ -47,7 +47,65 @@
 					"Synopsis": "Returns campaign details for one campaign",
 					"HTTPMethod": "GET",
 					"URI": "/campaign/:id",
-					"parameters": []
+					"parameters": [
+						{
+							"Name": "id",
+							"Required": "Y",
+							"Type": "string",
+							"Description": "UUID of desired campaign."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"methods": [
+				{
+					"MethodName": "Campaign Report",
+					"Synopsis": "Returns analytical data over a given time interval. Results include impressions, conversion, costs, clicks, ctr, and cpc for each campaign.",
+					"HTTPMethod": "GET",
+					"URI": "/reports/campaign_report",
+					"parameters": [
+						{
+							"Name": "site_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to the campaigns underneath the given site."
+						},
+						{
+							"Name": "campaign_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to a specific campaign. Overrides the 'site_id' parameter."
+						},
+						{
+							"Name": "interval",
+							"Required": "N",
+							"Type": "enumerated",
+							"Description": "Limits the results to a time interval. All results are in Eastern Time.",
+							"Default": "last_7_days",
+							"EnumeratedList": [
+								"yesterday",
+								"today",
+								"last_7_days",
+								"last_30_days",
+								"lifetime"
+							]
+						},
+						{
+							"Name": "start_date",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Explicit start date for a time interval. Format: YYYY-mm-dd. Date is in Eastern Time. Must include an end_date if using start_date."
+						},
+						{
+							"Name": "end_date",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Explicit end date for a time interval. Format: YYYY-mm-dd. Date is in Eastern Time. Must include a start_date if using end_date."
+						}
+					]
 				}
 			]
 		}
