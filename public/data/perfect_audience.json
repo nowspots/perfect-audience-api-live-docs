@@ -1,0 +1,55 @@
+{
+	"endpoints": [
+		{
+			"name": "Authorization",
+			"methods": [
+				{
+					"MethodName": "Obtain Authorization Token",
+					"Synopsis": "This method allows you to obtain an authorization token. Tokens expire two hours from when they are issued.",
+					"HTTPMethod": "POST",
+					"URI": "/auth",
+					"parameters": [
+						{
+							"Name": "email",
+							"Required": "Y",
+							"Type": "string",
+							"Description": "The email address you used to sign up for Perfect Audience."
+						},
+						{
+							"Name": "password",
+							"Required": "Y",
+							"Type": "password",
+							"Description": "Your Perfect Audience password."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Campaigns",
+			"methods": [
+				{
+					"MethodName": "All Campaign Details",
+					"Synopsis": "Lists all campaigns the user has access to.",
+					"HTTPMethod": "GET",
+					"URI": "/campaigns",
+					"parameters": [
+						{
+							"Name": "siteId",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to the campaigns underneath the given site."
+						}
+					]
+				},
+				{
+					"MethodName": "Specific Campaign Details",
+					"Synopsis": "Returns campaign details for one campaign",
+					"HTTPMethod": "GET",
+					"URI": "/campaign/:id",
+					"parameters": []
+				}
+			]
+		}
+	]
+}
