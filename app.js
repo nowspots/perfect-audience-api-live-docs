@@ -330,12 +330,12 @@ function processRequest(req, res, next) {
     
     // Add API Key to params, if any.
     if (apiKey) {
-        if (options.method == 'GET' || options.method == 'DELETE' || apiConfig.auth.key.forceQueryString) {
-            options.path += (options.path.indexOf('?') === -1 ? '?' : '&') + apiConfig.auth.key.param + '=' + apiKey;
-        }
-        else {
-        	params[apiConfig.auth.key.param] = apiKey 
-        }   
+        // if (options.method == 'GET' || options.method == 'DELETE' || apiConfig.auth.key.forceQueryString) {
+        //     options.path += (options.path.indexOf('?') === -1 ? '?' : '&') + apiConfig.auth.key.param + '=' + apiKey;
+        // }
+        // else {
+        // 	params[apiConfig.auth.key.param] = apiKey 
+        // }   
     }
 
     if (apiConfig.auth.oauth) {
@@ -536,6 +536,10 @@ function processRequest(req, res, next) {
                 }
             }
         }
+
+        if (apiKey) {
+            options.headers['Authorization'] = apiKey;
+        }
         
         
         if (req.body.headerNames && req.body.headerNames.length > 0) {
@@ -567,8 +571,20 @@ function processRequest(req, res, next) {
             }
         }
 
-        console.log(util.inspect(params));
-        
+        console.log(util.inspect(
+            (function() {
+                var paramsToPrint = {};
+                for (var param in params) {
+                    if (param === "password") {
+                        paramsToPrint[param] = "[FILTERED]";
+                    } else {
+                        paramsToPrint[param] = params[param];
+                    }
+                }
+                return paramsToPrint;
+            })()
+        ));
+
         if (config.debug) {
             console.log(util.inspect(options));
         };
@@ -608,7 +624,7 @@ function processRequest(req, res, next) {
                 switch (true) {
                     case /application\/javascript/.test(responseContentType):
                     case /application\/json/.test(responseContentType):
-                        console.log(util.inspect(body));
+                        // console.log(util.inspect(body));
                         // body = JSON.parse(body);
                         break;
                     case /application\/xml/.test(responseContentType):

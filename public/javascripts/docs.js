@@ -243,6 +243,13 @@
                 // Format output according to content-type
                 response = livedocs.formatData(result.response, result.headers['content-type'])
 
+                var jsonResponse = JSON.parse(response);
+                if (jsonResponse.token) {
+                    window.authToken = jsonResponse.token;
+                    $('form#credentials').append($('<input>').val(window.authToken).attr('type', 'hidden').attr('name', 'apiKey'));
+                    livedocs.authSuccess("Authenticated with token: " + window.authToken);
+                }
+
                 $('pre.response', resultContainer)
                     .toggleClass('error', false)
                     .text(response);

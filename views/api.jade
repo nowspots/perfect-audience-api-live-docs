@@ -43,6 +43,8 @@ mixin displayParameters(parameters, path)
                                          option(value=choice) #{choice}
                     - else if (parameter.Type == 'readonly')
                         input(name=paramName, value=parameter.Default, placeholder=className, readonly='readonly')
+                    - else if (parameter.Type == 'password')
+                        input(name=paramName, value=parameter.Default, placeholder=className, type='password')
                     - else
                         input(name=paramName, value=parameter.Default, placeholder=className)
             td.type=(parameter.Type != 'parent' ? parameter.Type : '')
@@ -73,7 +75,7 @@ form#credentials
              span Authenticated with OAuth
              img(src='/images/accept.png')
          - else
-             h2 API Credentials
+             h2 You must obtain an Authorization token using the "Authorization" endpoint before making any other calls.
                img(src='/images/key.png')
              
              - each auth, key in apiInfo.auth
