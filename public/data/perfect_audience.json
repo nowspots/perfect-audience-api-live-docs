@@ -26,6 +26,30 @@
 			]
 		},
 		{
+			"name": "Data Status",
+			"methods": [
+				{
+					"MethodName": "Data Status",
+					"Synopsis": "Returns the timestamp at which the requested data source was last updated.",
+					"HTTPMethod": "GET",
+					"URI": "/data_status",
+					"parameters": [
+						{
+							"Name": "data_type",
+							"Required": "Y",
+							"Type": "enumerated",
+							"EnumeratedList": [
+								"campaign_report",
+								"ad_report",
+								"conversion_report"
+							],
+							"Description": "The data source to check status of."
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Reports",
 			"methods": [
 				{
@@ -45,6 +69,98 @@
 							"Required": "N",
 							"Type": "string",
 							"Description": "Limits the results to a specific campaign. Overrides the 'site_id' parameter."
+						},
+						{
+							"Name": "interval",
+							"Required": "N",
+							"Type": "enumerated",
+							"Description": "Limits the results to a time interval. All results are in Eastern Time.",
+							"Default": "last_7_days",
+							"EnumeratedList": [
+								"yesterday",
+								"today",
+								"last_7_days",
+								"last_30_days",
+								"lifetime"
+							]
+						},
+						{
+							"Name": "start_date",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Explicit start date for a time interval. Format: YYYY-mm-dd. Date is in Eastern Time. Must include an end_date if using start_date."
+						},
+						{
+							"Name": "end_date",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Explicit end date for a time interval. Format: YYYY-mm-dd. Date is in Eastern Time. Must include a start_date if using end_date."
+						}
+					]
+				},
+				{
+					"MethodName": "Ad Report",
+					"Synopsis": "Returns analytical data over a given time interval. Results include impressions, conversion, costs, clicks, ctr, and cpc for each ad.",
+					"HTTPMethod": "GET",
+					"URI": "/reports/ad_report",
+					"parameters": [
+						{
+							"Name": "site_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to the ads underneath the given site."
+						},
+						{
+							"Name": "ad_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to a specific ad. Overrides the 'site_id' parameter."
+						},
+						{
+							"Name": "interval",
+							"Required": "N",
+							"Type": "enumerated",
+							"Description": "Limits the results to a time interval. All results are in Eastern Time.",
+							"Default": "last_7_days",
+							"EnumeratedList": [
+								"yesterday",
+								"today",
+								"last_7_days",
+								"last_30_days",
+								"lifetime"
+							]
+						},
+						{
+							"Name": "start_date",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Explicit start date for a time interval. Format: YYYY-mm-dd. Date is in Eastern Time. Must include an end_date if using start_date."
+						},
+						{
+							"Name": "end_date",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Explicit end date for a time interval. Format: YYYY-mm-dd. Date is in Eastern Time. Must include a start_date if using end_date."
+						}
+					]
+				},
+				{
+					"MethodName": "Conversion Report",
+					"Synopsis": "Returns analytical data over a given time interval. Results include post-click conversions, post-view conversions, and total conversions for each configured conversion.",
+					"HTTPMethod": "GET",
+					"URI": "/reports/conversion_report",
+					"parameters": [
+						{
+							"Name": "site_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to the conversions underneath the given site."
+						},
+						{
+							"Name": "conversion_id",
+							"Required": "N",
+							"Type": "string",
+							"Description": "Limits the results to a specific conversion. Overrides the 'site_id' parameter."
 						},
 						{
 							"Name": "interval",

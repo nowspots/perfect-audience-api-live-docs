@@ -759,6 +759,11 @@ dd {
   float: left;
 }
 
+.welcome p {
+  font-size: 16px;
+  margin: 15px 0;
+}
+
 @media print {
   * {
     background: transparent !important;

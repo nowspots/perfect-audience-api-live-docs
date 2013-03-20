@@ -1,6 +1,6 @@
 {
     "perfect_audience": {
-        "name": "Perfect Audience API",
+        "name": "Perfect Audience API - Live Documentation",
         "protocol": "https",
         "baseURL": "api.perfectaudience.com",
         "publicPath": "",
@@ -8,7 +8,6 @@
         "headers": {
             "Accept": "application/vnd.perfect-audience-v1+json"
         },
-        "auth": "key",
-        "debug": true
+        "auth": "key"
     }
 }
