@@ -3,3 +3,5 @@ node_modules/*
 logs/*
 pids/*
 .project
+newrelic_agent.log
+

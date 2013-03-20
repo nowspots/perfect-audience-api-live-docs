@@ -25,6 +25,7 @@
 // Module dependencies
 //
 var express     = require('express'),
+    newrelic    = require('newrelic'),
     util        = require('util'),
     fs          = require('fs'),
     OAuth       = require('oauth').OAuth,
