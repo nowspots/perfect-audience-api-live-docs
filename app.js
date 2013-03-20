@@ -713,9 +713,10 @@ app.dynamicHelpers({
 // Routes
 //
 app.get('/', function(req, res) {
-    res.render('listAPIs', {
-        title: config.title
-    });
+    // res.render('listAPIs', {
+    //     title: config.title
+    // });
+    res.redirect('/perfect_audience');
 });
 
 // Process the API request
